@@ -98,7 +98,7 @@ Map {
   [CONTOURELE=14360],[CONTOURELE=14440],[CONTOURELE=14520],[CONTOURELE=14600],
   [CONTOURELE=14680],[CONTOURELE=14760],[CONTOURELE=14840],[CONTOURELE=14920]
   {
-    line-width: 6.000;
+    line-width: 4.950;
     line-join: round;
     line-cap: round;
     line-color: #178;
@@ -130,13 +130,13 @@ Map {
 
 #majorRoads {
   ::case {
-    line-width: 22.220;
+    line-width: 8.010;
     line-join: round;
     line-cap: round;
     line-color: #fff;
     line-opacity: 1.000;
     [CLASS='Federal'] {
-      line-width: 26.660;
+      line-width: 12.950;
       line-join: round;
       line-cap: round;
       line-color: #fff;
@@ -144,16 +144,16 @@ Map {
     }
   }
   ::fill {
-    line-width: 8.890;
+    line-width: 4.950;
     line-join: round;
     line-cap: round;
-    line-color: #555;
+    line-color: #000;
     line-opacity: 1.000;
     [CLASS='Federal'] {
-      line-width: 17.780;
+      line-width: 8.000;
       line-join: round;
       line-cap: round;
-      line-color: #555;
+      line-color: #000;
       line-opacity: 1.000;
     }
   }
@@ -170,7 +170,7 @@ Map {
 }
 
 #graticule {
-  line-width: 6.670;
+  line-width: 4.950;
   line-join: round;
   line-cap: round;
   line-color: #a55;

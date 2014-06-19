@@ -53,13 +53,13 @@ majorContourText = textStyle(name="\"[CONTOURELE].replace('0\.0','0')\"",    fil
 federalText      = textStyle(name="'US ' + [NUMBER]",fill="#000",placement="line",indent="    ",isLine=True)
 graticuleText    = textStyle(name='[name]',          fill="#811",placement="line",isLine=True)
 
-minorContour = lineStyle(width= 6.00,color="#178",opacity=0.6,indent="    ")
+minorContour = lineStyle(width= 4.95,color="#178",opacity=0.6,indent="    ")
 majorContour = lineStyle(width= 8.00,color="#178",indent="      ")
-stateCase    = lineStyle(width=22.22,color="#fff",indent="    ")
-federalCase  = lineStyle(width=26.66,color="#fff",indent="      ")
-stateFill    = lineStyle(width= 8.89,color="#555",indent="    ")
-federalFill  = lineStyle(width=17.78,color="#555",indent="      ")
-graticule    = lineStyle(width= 6.67,color="#a55",opacity=0.8)
+stateCase    = lineStyle(width= 8.01,color="#fff",indent="    ")
+federalCase  = lineStyle(width=12.95,color="#fff",indent="      ")
+stateFill    = lineStyle(width= 4.95,color="#000",indent="    ")
+federalFill  = lineStyle(width= 8.00,color="#000",indent="      ")
+graticule    = lineStyle(width= 4.95,color="#a55",opacity=0.8)
 
 print """
 Map {{
