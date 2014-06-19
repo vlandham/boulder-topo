@@ -12,7 +12,7 @@ def lineStyle(width,color,opacity=1.0,indent="  "):
 def markersStyle(width=26.66,lineWidth=6.4,indent="  "):
 	return ("marker-width:{};\n"
 			"{indent}marker-line-width:{};\n"
-			"{indent}marker-fill:#444;\n"
+			"{indent}marker-fill:#000;\n"
 			"{indent}marker-line-color:#fff;\n"
 			"{indent}marker-opacity:1;\n"
 			"{indent}marker-allow-overlap:true;").format(width*scale,lineWidth*scale,indent=indent)
