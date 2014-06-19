@@ -49,7 +49,7 @@ markers = markersStyle()
 
 markersText      = textStyle(name="[featureName]",placements="S")
 gnisText         = textStyle(name="[featureName]")
-majorContourText = textStyle(name="[CONTOURELE]",    fill="#178",placement="line",indent="      ",isLine=True)
+majorContourText = textStyle(name="\"[CONTOURELE].replace('0\.0','0')\"",    fill="#178",placement="line",indent="      ",isLine=True)
 federalText      = textStyle(name="'US ' + [NUMBER]",fill="#000",placement="line",indent="    ",isLine=True)
 graticuleText    = textStyle(name='[name]',          fill="#811",placement="line",isLine=True)
 

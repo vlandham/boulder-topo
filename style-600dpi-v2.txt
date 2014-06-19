@@ -115,7 +115,7 @@ Map {
       line-cap: round;
       line-color: #178;
       line-opacity: 1.000;
-      text-name: [CONTOURELE];
+      text-name: "[CONTOURELE].replace('0\.0','0')";
       text-face-name: 'Avenir Heavy';
       text-size: 44.440;
       text-fill: #178;
