@@ -1,55 +1,72 @@
+# =========================================================================================================
+# Calculate the scaling factor to apply to sizes and line widths. At the moment the scaling factor is 1.0
+# because the starting sizes and line widths were pre-calculated in a spreadsheet. This is nearly
+# equivalent to what the scale factor slider does, except this method allows the scale factor to be set
+# with more precision.
+# =========================================================================================================
 inputDPI = 600.0
 outputDPI = 600.0
 scale = outputDPI / inputDPI
 
+
+# =========================================================================================================
+# These functions create blocks of CartoCSS according to the specified  colors, line widths, font sizes,
+# and opacities. Widths and sizes are scaled by the scaling factor calculated above.
+# =========================================================================================================
 def lineStyle(width,color,opacity=1.0,indent="  "):
-	return ("line-width: {:.3f};\n"
-	        "{indent}line-join: round;\n"
-	        "{indent}line-cap: round;\n"
-	        "{indent}line-color: {};\n"
-	        "{indent}line-opacity: {:.3f};").format(width*scale,color,opacity,indent=indent)
+  return ("line-width: {:.3f};\n"
+          "{indent}line-join: round;\n"
+          "{indent}line-cap: round;\n"
+          "{indent}line-color: {};\n"
+          "{indent}line-opacity: {:.3f};").format(width*scale,color,opacity,indent=indent)
 
 def markersStyle(width=26.66,lineWidth=6.4,indent="  "):
-	return ("marker-width:{};\n"
-			"{indent}marker-line-width:{};\n"
-			"{indent}marker-fill:#000;\n"
-			"{indent}marker-line-color:#fff;\n"
-			"{indent}marker-opacity:1;\n"
-			"{indent}marker-allow-overlap:true;").format(width*scale,lineWidth*scale,indent=indent)
+  return ("marker-width:{};\n"
+      "{indent}marker-line-width:{};\n"
+      "{indent}marker-fill:#000;\n"
+      "{indent}marker-line-color:#fff;\n"
+      "{indent}marker-opacity:1;\n"
+      "{indent}marker-allow-overlap:true;").format(width*scale,lineWidth*scale,indent=indent)
 
 def textStyle(name,fill="#000",size=44.44,dx=13.33,dy=22.22,haloRadius=6.4,
-		placement="",placementType="simple",placements="N,S,E,W,NE,SE,NW,SW",indent="  ",isLine=False):
+    placement="",placementType="simple",placements="N,S,E,W,NE,SE,NW,SW",indent="  ",isLine=False):
 
-	if placement == "":
-		# If line placement wasn't specified, then use point placement
-		placement = ("text-placement-type: {};\n"
-					 "{indent}text-placements: {};").format(placementType,placements,indent=indent)
-	elif placement == "line":
-		placement = "text-placement: line;"
+  if placement == "":
+    # If line placement wasn't specified, then use point placement
+    placement = ("text-placement-type: {};\n"
+           "{indent}text-placements: {};").format(placementType,placements,indent=indent)
+  elif placement == "line":
+    placement = "text-placement: line;"
 
-	if isLine:
-	    dxDy = ""
-	else:
-		dxDy = ("{indent}text-dx: {:.3f};\n"
-			    "{indent}text-dy: {:.3f};\n").format(dx*scale,dy*scale,indent=indent)
+  if isLine:
+      dxDy = ""
+  else:
+    dxDy = ("{indent}text-dx: {:.3f};\n"
+          "{indent}text-dy: {:.3f};\n").format(dx*scale,dy*scale,indent=indent)
 
-	return ("text-name: {};\n"
-			"{indent}text-face-name: 'Avenir Heavy';\n"
-			"{indent}text-size: {:.3f};\n"
-			"{indent}text-fill: {};\n"
-			"{indent}text-halo-radius: {:.3f};\n"
-			"{indent}text-halo-fill: #fff;\n"
-			"{dxDy}"
-			"{indent}{}\n"
-			"{indent}text-opacity:1;"
-			).format(name,size*scale,fill,haloRadius*scale,placement,dxDy=dxDy,indent=indent)
+  return ("text-name: {};\n"
+      "{indent}text-face-name: 'Avenir Heavy';\n"
+      "{indent}text-size: {:.3f};\n"
+      "{indent}text-fill: {};\n"
+      "{indent}text-halo-radius: {:.3f};\n"
+      "{indent}text-halo-fill: #fff;\n"
+      "{dxDy}"
+      "{indent}{}\n"
+      "{indent}text-opacity:1;"
+      ).format(name,size*scale,fill,haloRadius*scale,placement,dxDy=dxDy,indent=indent)
 
 
+# =========================================================================================================
+# The parameters to these function calls make up a compressed specification of the style. The point is
+# to make it easier to set colors consistently, and to ajust relative sizes and widths, without having
+# to scroll through a lot of CartoCSS
+# =========================================================================================================
 markers = markersStyle()
 
 markersText      = textStyle(name="[featureName]",placements="S")
 gnisText         = textStyle(name="[featureName]")
-majorContourText = textStyle(name="\"[CONTOURELE].replace('0\.0','0')\"",    fill="#178",placement="line",indent="      ",isLine=True)
+majorContourText = textStyle(name="\"[CONTOURELE].replace('0\.0','0')\"",
+                             fill="#178",placement="line",indent="      ",isLine=True)
 federalText      = textStyle(name="'US ' + [NUMBER]",fill="#000",placement="line",indent="    ",isLine=True)
 graticuleText    = textStyle(name='[name]',          fill="#811",placement="line",isLine=True)
 
@@ -61,6 +78,11 @@ stateFill    = lineStyle(width= 4.95,color="#000",indent="    ")
 federalFill  = lineStyle(width= 8.00,color="#000",indent="      ")
 graticule    = lineStyle(width= 4.95,color="#a55",opacity=0.8)
 
+
+# =========================================================================================================
+# This long format string contains portions of the map's CartoCSS style which are not sensitive to scaling,
+# along with named variables for the blocks of CartoCSS calculated by the functions above.
+# =========================================================================================================
 print """
 Map {{
   background-color: #fff;
@@ -169,7 +191,7 @@ Map {{
   {graticuleText}
 }}
 """.format(markersText=markersText,markers=markers,gnisText=gnisText,
-		   minorContour=minorContour,majorContour=majorContour,
-		   majorContourText=majorContourText,stateCase=stateCase,
-		   federalCase=federalCase,stateFill=stateFill,federalFill=federalFill,
-		   federalText=federalText,graticule=graticule,graticuleText=graticuleText)
+       minorContour=minorContour,majorContour=majorContour,
+       majorContourText=majorContourText,stateCase=stateCase,
+       federalCase=federalCase,stateFill=stateFill,federalFill=federalFill,
+       federalText=federalText,graticule=graticule,graticuleText=graticuleText)
